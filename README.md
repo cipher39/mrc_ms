@@ -41,4 +41,12 @@ http://localhost:1111/application/default
 http://localhost:1111/{application-name}/{profile}
 
 # How to use the above Spring Cloud Config Server in different microservices
+in Each MS: 
+Add spring-cloud-starter-config, spring-cloud-dependencies
+Mention the URI of config server in application.properties file
+	spring.config.import=optional:configserver:http://localhost:1111
+
+
+**Making Request to fetch salesperson from MRC-Roadways MS**
+http://localhost:8080/salesperson/3
 
