@@ -1,17 +1,9 @@
 package com.mrc.auth.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
-@ToString
+@Data
 public class LoginRequestDTO {
-	
-	@Getter
-	@Setter
 	private String username;
-	
-	@Getter
-	@Setter
 	private String password;
 }
