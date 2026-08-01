@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
 	}
 	
-	@ExceptionHandler(RuntimeException.class)
+	@ExceptionHandler(InvalidCredentialsException.class)
 	public ResponseEntity<ApiErrorResponse> handleInvalidCredentialsException(InvalidCredentialsException ex, 
 			HttpServletRequest request){
 		ApiErrorResponse response = ApiErrorResponse.builder()

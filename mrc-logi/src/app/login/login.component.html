@@ -23,11 +23,10 @@
             <input type="password" name="password" [(ngModel)]="password" placeholder="Enter Password">
 
             <button type="submit" (click)="login(); changeCount()">Login ({{ccount}})</button>
-
+            <p *ngIf="isLoggedIn" style="color: green;">Login Successful!</p>
             <a href="#">Forgot Password?</a>
 
         </form>
-
     </div>
 
 </body>

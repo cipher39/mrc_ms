@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth.service';
+import { AuthResponse } from '../models/auth.model';
 
 @Component({
   selector: 'app-login',
@@ -9,8 +11,9 @@ export class LoginComponent implements OnInit {
   ccount = 0;
   username: string = '';
   password: string = '';
+  isLoggedIn: boolean = false;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -20,11 +23,15 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
-    if(this.username=='cipher' && this.password=='cip3'){
-      alert('Login Successful');
-    }else{
-      alert('Login Failed');
-    }
+    this.authService.login(this.username, this.password).subscribe(
+      (response: AuthResponse) => {
+        localStorage.setItem('accessToken', response.accessToken);
+        this.isLoggedIn = true;
+      },
+      (error) => {
+        this.isLoggedIn = false;
+      }
+    );
   }
 
 }
