@@ -16,6 +16,8 @@ import com.mrc.auth.dto.RegisterRequestDTO;
 import com.mrc.auth.dto.UserResponseDTO;
 import com.mrc.auth.entity.Role;
 import com.mrc.auth.entity.User;
+import com.mrc.auth.exception.InvalidCredentialsException;
+import com.mrc.auth.exception.ResourceNotFoundException;
 import com.mrc.auth.repository.RoleRepository;
 import com.mrc.auth.repository.UserRepository;
 
@@ -46,7 +48,8 @@ public class AuthService {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 
-		User user = userRepository.findByUsername(username);
+		User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new RuntimeException("User " + username + "not found"));
 		
 		UserResponseDTO userDto = new UserResponseDTO();
 		userDto.setId(user.getId());
@@ -59,7 +62,12 @@ public class AuthService {
 	}
 	
 	public LoginResponseDTO login(LoginRequestDTO loginDto) {
-		User user = userRepository.findByUsername(loginDto.getUsername());
+		
+		String username = loginDto.getUsername();
+		User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new ResourceNotFoundException
+						("User not found: " + username));
+		
 		boolean isValid = passwordEncoder.matches(loginDto.getPassword(), user.getPassword());
 		
 		LoginResponseDTO loginResponse = new LoginResponseDTO();
@@ -76,7 +84,7 @@ public class AuthService {
                     .stream()
                     .map(Role::getRoleName)
                     .toList());
-		}
+		}else throw new InvalidCredentialsException("Username or Password is Incorrect");
 		return loginResponse;
 	}
 	
