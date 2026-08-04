@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AuthResponse } from './models/auth.model';
+import { AuthResponse, UserResponse } from './models/auth.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,12 @@ export class AuthService {
   login(username: string, password: string) {
     const loginRequest = { username, password };
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, loginRequest);
+  }
+
+  getCurrentUser() {
+    const token = localStorage.getItem('accessToken');
+    const headers = { 'Authorization': `Bearer ${token}` };
+    return this.http.get<UserResponse>(`${this.apiUrl}/user/me`, { headers });
   }
 
 }

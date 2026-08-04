@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { AuthResponse } from '../models/auth.model';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class Login {
   password: string = '';
   isLoggedIn: boolean = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
 // what is thee use of ngOnInit()
   ngOnInit(): void {
@@ -32,6 +33,7 @@ export class Login {
       (response: AuthResponse) => {
         localStorage.setItem('accessToken', response.accessToken);
         this.isLoggedIn = true;
+        this.router.navigate(['/dashboard']);
       },
       (error) => {
         this.isLoggedIn = false;

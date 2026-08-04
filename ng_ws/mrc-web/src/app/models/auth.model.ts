@@ -14,3 +14,13 @@ export interface AuthResponse {
   username: string;
   roles: string[];
 }
+
+
+// Defines the structure of the user object
+export interface UserResponse {
+  id: number;
+  username: string;
+  fullName: string;
+  email: string;
+  roles: string[];
+}

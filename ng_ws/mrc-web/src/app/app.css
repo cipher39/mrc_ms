@@ -1,0 +1,23 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+app-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+router-outlet {
+    display: none;
+}
+
+.main-content {
+    flex: 1;
+}
