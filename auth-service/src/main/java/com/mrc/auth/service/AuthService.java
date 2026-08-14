@@ -14,6 +14,7 @@ import com.mrc.auth.dto.LoginRequestDTO;
 import com.mrc.auth.dto.LoginResponseDTO;
 import com.mrc.auth.dto.RegisterRequestDTO;
 import com.mrc.auth.dto.UserResponseDTO;
+import com.mrc.auth.dto.UserResponseRecord;
 import com.mrc.auth.entity.Role;
 import com.mrc.auth.entity.User;
 import com.mrc.auth.exception.InvalidCredentialsException;
@@ -88,7 +89,7 @@ public class AuthService {
 		return loginResponse;
 	}
 	
-	public UserResponseDTO register(RegisterRequestDTO request) {
+	public UserResponseRecord register(RegisterRequestDTO request) {
 		if(userRepository.existsByUsername(request.getUsername())) {
 			System.out.println("Username already Exists");
 			return null;
@@ -111,13 +112,8 @@ public class AuthService {
 		
 		user = userRepository.save(user);
 		
-		UserResponseDTO userDto = new UserResponseDTO();
-		userDto.setId(user.getId());
-		userDto.setUsername(user.getUsername());
-		userDto.setFullName(user.getFullName());
-		userDto.setEmail(user.getEmail());
-		Set<String> roles = user.getRoles().stream().map(x -> x.getRoleName()).collect(Collectors.toSet());
-		userDto.setRoles(roles);
+		UserResponseRecord userDto = new UserResponseRecord(user.getId(), user.getUsername(), user.getFullName(), user.getEmail(),
+		user.getRoles().stream().map(x -> x.getRoleName()).collect(Collectors.toSet()));
 		return userDto;
 	}
 }
