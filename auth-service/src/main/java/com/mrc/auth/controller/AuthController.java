@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mrc.auth.dto.LoginRequestDTO;
 import com.mrc.auth.dto.LoginResponseDTO;
-import com.mrc.auth.dto.RegisterRequestDTO;
+import com.mrc.auth.dto.RegisterRequestRecord;
 import com.mrc.auth.dto.UserResponseDTO;
 import com.mrc.auth.dto.UserResponseRecord;
 import com.mrc.auth.service.AuthService;
@@ -25,7 +25,7 @@ public class AuthController {
 	private AuthService authService;
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<UserResponseRecord> register(@RequestBody RegisterRequestDTO request){
+	public ResponseEntity<?> register(@RequestBody RegisterRequestRecord request){
 		System.out.println("Inside Resgister: 1: " + request.toString());
 		UserResponseRecord response = authService.register(request);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);

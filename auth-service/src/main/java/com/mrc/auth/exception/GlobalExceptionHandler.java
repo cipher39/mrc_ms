@@ -30,6 +30,18 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
 	}
 	
+	@ExceptionHandler(RuntimeException.class)
+	public ResponseEntity<?> genericHandler(RuntimeException ex, HttpServletRequest request){
+		ApiErrorResponse response = ApiErrorResponse.builder()
+				.status(HttpStatus.FORBIDDEN.value())
+				.error(HttpStatus.FORBIDDEN.getReasonPhrase())
+				.message(ex.getMessage())
+				.path(request.getRequestURI())
+				.timesatamp(LocalDateTime.now())
+				.build();
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+	}
+	
 	/*
 	 * 
 @RestControllerAdvice is a Spring annotation that lets you handle errors and exceptions globally for all REST endpoints in your app. 

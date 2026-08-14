@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.mrc.auth.dto.LoginRequestDTO;
 import com.mrc.auth.dto.LoginResponseDTO;
 import com.mrc.auth.dto.RegisterRequestDTO;
+import com.mrc.auth.dto.RegisterRequestRecord;
 import com.mrc.auth.dto.UserResponseDTO;
 import com.mrc.auth.dto.UserResponseRecord;
 import com.mrc.auth.entity.Role;
@@ -89,23 +90,23 @@ public class AuthService {
 		return loginResponse;
 	}
 	
-	public UserResponseRecord register(RegisterRequestDTO request) {
-		if(userRepository.existsByUsername(request.getUsername())) {
+	public UserResponseRecord register(RegisterRequestRecord request) {
+		if(userRepository.existsByUsername(request.username())) {
 			System.out.println("Username already Exists");
 			return null;
 		}
-		if(userRepository.existsByEmail(request.getEmail())) {
+		if(userRepository.existsByEmail(request.email())) {
 			System.out.println("Email alread Exists");
 			return null;
 		}
 		
 		Role defaultRole = roleRepository.findByRoleName("BROKER");
-		String encryptedPassword = passwordEncoder.encode(request.getPassword());
+		String encryptedPassword = passwordEncoder.encode(request.password());
 		
 		User user = new User();
-		user.setUsername(request.getUsername());
-		user.setEmail(request.getEmail());
-		user.setFullName(request.getFullName());
+		user.setUsername(request.username());
+		user.setEmail(request.email());
+		user.setFullName(request.fullName());
 		user.setPassword(encryptedPassword);
 		user.getRoles().add(defaultRole);
 		user.setActive(true);
