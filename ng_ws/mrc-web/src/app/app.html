@@ -1,8 +1,9 @@
-<!-- <app-login></app-login> -->
- <app-header></app-header>
+
+<app-header></app-header>
 
 <div class="main-content">
-    <router-outlet></router-outlet>
+    <!-- <router-outlet></router-outlet> -->
+    <app-login [msg]="parentMessage"></app-login>
 </div>
 
 <app-footer></app-footer>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { AuthResponse } from '../models/auth.model';
@@ -17,6 +17,8 @@ export class Login {
   username: string = '';
   password: string = '';
   isLoggedIn: boolean = false;
+
+  @Input() msg: string = '';
 
   constructor(private authService: AuthService, private router: Router) { }
 

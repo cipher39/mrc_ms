@@ -12,4 +12,5 @@ import { Footer } from './footer/footer';
 })
 export class App {
   protected readonly title = signal('mrc-web');
+  parentMessage = "Hello from parent app component!";
 }
